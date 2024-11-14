@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api/axios';
 import '../../App.css';
-import 'bootstrap';
-import Modal from 'react-modal';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal, Button } from 'react-bootstrap';
 
 const RegisterUserModal = ({ isOpen, onRequestClose, onRegister }) => {
     const [newUser, setNewUser] = useState({
@@ -19,17 +18,11 @@ const RegisterUserModal = ({ isOpen, onRequestClose, onRegister }) => {
     };
 
     return (
-        <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-                <div className="modal show d-block" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Registrar Usuario</h5>
-                            <button type="button" className="close" onClick={onRequestClose} aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
+        <Modal show={isOpen} onHide={onRequestClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Registrar Usuario</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                                 <form onSubmit={handleRegisterUser}>
                                     <div className="form-group">
                                         <label htmlFor="name">Nombre</label>
@@ -67,44 +60,36 @@ const RegisterUserModal = ({ isOpen, onRequestClose, onRegister }) => {
                                             required 
                                         />
                                     </div>
-                                    <button type="submit" className="btn btn-primary">
+                    <Button type="submit" variant="primary">
                                         Registrar
-                                    </button>
+                    </Button>
                                 </form>
-                            </div>
-                            <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={onRequestClose}>Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onRequestClose}>
+                    Cerrar
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 };
 
 const ViewUserModal = ({ isOpen, onRequestClose, user }) => (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-        <div className="modal show d-block" tabIndex="-1" role="dialog">
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">Detalles del Usuario</h5>
-                        <button type="button" className="close" onClick={onRequestClose} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
+    <Modal show={isOpen} onHide={onRequestClose}>
+        <Modal.Header closeButton>
+            <Modal.Title>Detalles del Usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
                         <p><strong>ID:</strong> {user?.id}</p>
                         <p><strong>Nombre:</strong> {user?.name}</p>
                         <p><strong>Email:</strong> {user?.email}</p>
                         {/* Otros detalles del usuario */}
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" onClick={onRequestClose}>Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="primary" onClick={onRequestClose}>
+                Cerrar
+            </Button>
+        </Modal.Footer>
             </Modal>
 );
 
@@ -121,66 +106,59 @@ const EditUserModal = ({ isOpen, onRequestClose, user, onUpdate }) => {
     };
 
     return (
-        <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-            <div className="modal show d-block" tabIndex="-1" role="dialog">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Editar Usuario</h5>
-                        <button type="button" className="close" onClick={onRequestClose} aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <form onSubmit={handleUpdateUser}>
-                                <div className="form-group">
-                                    <input type="hidden" value={updatedUser?.id || ''} name='id' />
-                                    <label htmlFor="name">Nombre</label>
-                                    <input 
-                                        type="text" 
-                                        className="form-control" 
-                                        id="name" 
-                                    value={updatedUser?.name || ''} 
-                                        name='name'
-                                    onChange={(e) => setUpdatedUser({ ...updatedUser, name: e.target.value })} 
-                                        required 
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="email">Email</label>
-                                    <input 
-                                        type="email" 
-                                        className="form-control" 
-                                        id="email" 
-                                    value={updatedUser?.email || ''} 
-                                        name='email'
-                                    onChange={(e) => setUpdatedUser({ ...updatedUser, email: e.target.value })} 
-                                        required 
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password">Contraseña</label>
-                                    <input 
-                                        type="password" 
-                                        className="form-control" 
-                                        id="password" 
-                                    value={updatedUser?.password || ''} 
-                                        name='password'
-                                    onChange={(e) => setUpdatedUser({ ...updatedUser, password: e.target.value })} 
-                                        required 
-                                    />
-                                </div>
-                                <button type="submit" className="btn btn-primary">
-                                    Actualizar
-                                </button>
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={onRequestClose}>Cerrar</button>
-                        </div>
+        <Modal show={isOpen} onHide={onRequestClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Editar Usuario</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <form onSubmit={handleUpdateUser}>
+                    <div className="form-group">
+                        <input type="hidden" value={updatedUser?.id || ''} name='id' />
+                        <label htmlFor="name">Nombre</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="name" 
+                        value={updatedUser?.name || ''} 
+                            name='name'
+                        onChange={(e) => setUpdatedUser({ ...updatedUser, name: e.target.value })} 
+                            required 
+                        />
                     </div>
-                </div>
-            </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input 
+                            type="email" 
+                            className="form-control" 
+                            id="email" 
+                        value={updatedUser?.email || ''} 
+                            name='email'
+                        onChange={(e) => setUpdatedUser({ ...updatedUser, email: e.target.value })} 
+                            required 
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Contraseña</label>
+                        <input 
+                            type="password" 
+                            className="form-control" 
+                            id="password" 
+                        value={updatedUser?.password || ''} 
+                            name='password'
+                        onChange={(e) => setUpdatedUser({ ...updatedUser, password: e.target.value })} 
+                            required 
+                        />
+                    </div>
+        <Button type="submit" variant="primary">
+                        Actualizar
+        </Button>
+                </form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onRequestClose}>
+                    Cerrar
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 };
@@ -276,7 +254,7 @@ const Home = ({ token, onLogout, userAuth }) => {
         }
     };
 
-    const deleteUser = async (userId) => {
+    const handleDeleteUser = async (userId) => {
         try {
             await api.delete(`/users/delete_user/${userId}`, {
                 headers: {
@@ -370,7 +348,7 @@ const Home = ({ token, onLogout, userAuth }) => {
                                         👁️‍🗨️
                                     </button>
                                     <button
-                                        onClick={() => deleteUser(user.id)}
+                                        onClick={() => handleDeleteUser(user.id)}
                                         className="btn btn-danger btn-sm ml-2"
                                     >
                                         🗑
